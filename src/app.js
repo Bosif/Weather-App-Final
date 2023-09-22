@@ -1,5 +1,4 @@
 function displayTemperature(response) {
-  console.log(response);
   console.log(response.data.temperature.current);
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -58,7 +57,19 @@ if (minutes < 10) {
 
 currentDate.innerHTML = `${day} ${hours}:${minutes} <br/> ${month} ${date}`;
 
-let apiKey = "c8a5e25887f10t1o4fc6a4fb7b8c3bcf";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query={Amsterdam}&key=${apiKey}&units=metric`;
+function search(city) {
+  let apiKey = "c8a5e25887f10t1o4fc6a4fb7b8c3bcf";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayTemperature);
+}
 
-axios.get(apiUrl).then(displayTemperature);
+function submitForm(event) {
+  event.preventDefault();
+  let cityInput = document.querySelector("#search-text-input");
+  search(cityInput.value);
+}
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", submitForm);
+
+search("Amsterdam");

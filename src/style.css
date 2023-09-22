@@ -28,7 +28,7 @@
 }
 
 #temperature {
-  font-size: 50px;
+  font-size: 70px;
   font-family: monospace, Arial;
   font-weight: bold;
 }
@@ -71,8 +71,7 @@ h2 {
   font-size: 36px;
 }
 
-.date,
-.min-max {
+.date {
   font-weight: 100;
 }
 
@@ -99,8 +98,15 @@ h2 {
 .description {
   font-size: 18px;
   text-transform: capitalize;
+  margin-top: 0px;
+  padding-top: 0px;
 }
 
 #icon {
   font-size: 64px;
+}
+
+.hum-wind {
+  font-size: 18px;
+  margin-top: 30px;
 }
