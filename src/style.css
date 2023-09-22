@@ -111,6 +111,10 @@ h2 {
   margin-top: 30px;
 }
 
+.units a {
+  text-decoration: none;
+}
+
 .active {
   color: black;
   cursor: default;
