@@ -45,7 +45,8 @@ function displayTemperature(response) {
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   let iconElement = document.querySelector("#icon");
-  temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+  celsiusTemperature = response.data.temperature.current;
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
   cityElement.innerHTML = response.data.city;
   descriptionElement.innerHTML = response.data.condition.description;
   humidityElement.innerHTML = response.data.temperature.humidity;
@@ -69,9 +70,6 @@ function searchLocation(position) {
   axios.get(apiUrl).then(displayTemperature);
 }
 
-let button = document.querySelector("#current-button");
-button.addEventListener("click", getCurrentLocation);
-
 function search(city) {
   let apiKey = "c8a5e25887f10t1o4fc6a4fb7b8c3bcf";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
@@ -84,7 +82,35 @@ function submitForm(event) {
   search(cityInput.value);
 }
 
+function showFahrenheitTemperature(event) {
+  event.preventDefault();
+  celsiusSwitch.classList.remove("active");
+  fahrenheitSwitch.classList.add("active");
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+}
+
+function showCelsiusTemperature(event) {
+  event.preventDefault();
+  celsiusSwitch.classList.add("active");
+  fahrenheitSwitch.classList.remove("active");
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+}
+
+let button = document.querySelector("#current-button");
+button.addEventListener("click", getCurrentLocation);
+
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", submitForm);
+
+let celsiusTemperature = null;
+
+let fahrenheitSwitch = document.querySelector("#fahrenheit");
+fahrenheitSwitch.addEventListener("click", showFahrenheitTemperature);
+
+let celsiusSwitch = document.querySelector("#celsius");
+celsiusSwitch.addEventListener("click", showCelsiusTemperature);
 
 search("Amsterdam");
