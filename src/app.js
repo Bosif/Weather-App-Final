@@ -38,6 +38,34 @@ if (minutes < 10) {
 
 currentDate.innerHTML = `${day} ${hours}:${minutes} <br/> ${month} ${date}`;
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let days = ["Sat", "Sun", "Mon", "Tue", "Wed"];
+
+  let forecastHTML = `<div class="row" id="weather-week">`;
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+  <div class="col-2">
+    <p>${day}</p>
+    <img
+      src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png"
+      width="60px"
+    />
+    <div class="forecast-temperatures">
+      <span class="forecast-maxtemp"> 22° / </span>
+      <span class="forecast-mintemp"> 14° </span>
+    </div>
+</div>
+`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -114,3 +142,4 @@ let celsiusSwitch = document.querySelector("#celsius");
 celsiusSwitch.addEventListener("click", showCelsiusTemperature);
 
 search("Amsterdam");
+displayForecast();
