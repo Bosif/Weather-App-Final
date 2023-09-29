@@ -38,7 +38,8 @@ if (minutes < 10) {
 
 currentDate.innerHTML = `${day} ${hours}:${minutes} <br/> ${month} ${date}`;
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
 
   let days = ["Sat", "Sun", "Mon", "Tue", "Wed"];
@@ -66,6 +67,12 @@ function displayForecast() {
   forecastElement.innerHTML = forecastHTML;
 }
 
+function getForecast(city) {
+  let apiKey = "c8a5e25887f10t1o4fc6a4fb7b8c3bcf";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -73,6 +80,7 @@ function displayTemperature(response) {
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   let iconElement = document.querySelector("#icon");
+
   celsiusTemperature = response.data.temperature.current;
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
   cityElement.innerHTML = response.data.city;
@@ -83,6 +91,8 @@ function displayTemperature(response) {
     "src",
     `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
   );
+
+  getForecast(response.data.city);
 }
 
 function getCurrentLocation(event) {
@@ -142,4 +152,3 @@ let celsiusSwitch = document.querySelector("#celsius");
 celsiusSwitch.addEventListener("click", showCelsiusTemperature);
 
 search("Amsterdam");
-displayForecast();
